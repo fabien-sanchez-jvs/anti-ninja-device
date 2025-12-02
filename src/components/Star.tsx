@@ -208,7 +208,7 @@ export default function Star({
           className="center-icon"
           onClick={onCenterClick}
         >
-          🎯
+          🥷
         </text>
 
         {/* Prénoms aux extrémités des branches */}

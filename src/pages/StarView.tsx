@@ -80,7 +80,7 @@ export default function StarView() {
       <div className="starview-footer">
         <div className="instructions">
           <div className="instruction-item">
-            <span className="instruction-icon">🎯</span>
+            <span className="instruction-icon">🥷</span>
             <span>Cliquez au centre pour une sélection aléatoire</span>
           </div>
           <div className="instruction-item">

@@ -1,0 +1,166 @@
+.star-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.star-svg {
+  max-width: 100%;
+  max-height: 100%;
+  filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.15));
+}
+
+.star-polygon {
+  transition: all 0.3s ease;
+}
+
+.star-branch {
+  transition: all 0.4s ease;
+}
+
+.star-center {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.star-center:hover {
+  fill: #f0f0f0;
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.6));
+}
+
+.center-icon {
+  font-size: 48px;
+  cursor: pointer;
+  user-select: none;
+  pointer-events: none;
+}
+
+.participant-click-zone {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.participant-click-zone:hover {
+  fill: rgba(102, 126, 234, 0.1);
+}
+
+.participant-label {
+  font-size: 24px;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.4s ease;
+  fill: #333;
+}
+
+/* État: en attente */
+.participant-label.waiting {
+  fill: #333;
+  font-weight: 600;
+}
+
+.participant-label.waiting:hover {
+  fill: #667eea;
+  font-size: 26px;
+  filter: drop-shadow(0 0 8px rgba(102, 126, 234, 0.6));
+}
+
+/* État: sélectionné */
+.participant-label.selected {
+  fill: #4caf50;
+  font-size: 32px;
+  font-weight: 700;
+  filter: drop-shadow(0 0 12px rgba(76, 175, 80, 0.8));
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* État: déjà passé */
+.participant-label.done {
+  fill: #9e9e9e;
+  font-weight: 400;
+  opacity: 0.5;
+  cursor: default;
+}
+
+.participant-label.done:hover {
+  fill: #9e9e9e;
+  font-size: 24px;
+}
+
+/* Animation de pulsation pour l'état sélectionné */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+/* Message quand aucun participant */
+.star-empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #666;
+  padding: 2rem;
+}
+
+.star-empty p {
+  margin: 0.5rem 0;
+}
+
+.star-empty p:first-child {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .star-container {
+    padding: 1rem;
+  }
+
+  .participant-label {
+    font-size: 20px;
+  }
+
+  .participant-label.waiting:hover {
+    font-size: 22px;
+  }
+
+  .participant-label.selected {
+    font-size: 28px;
+  }
+
+  .center-icon {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .participant-label {
+    font-size: 16px;
+  }
+
+  .participant-label.waiting:hover {
+    font-size: 18px;
+  }
+
+  .participant-label.selected {
+    font-size: 22px;
+  }
+
+  .center-icon {
+    font-size: 28px;
+  }
+}

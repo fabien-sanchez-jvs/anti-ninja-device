@@ -1,6 +1,6 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import type { Store, ParticipantState } from '../types';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import type { Store, ParticipantState } from "../types";
 
 /**
  * Store Zustand avec persistance localStorage
@@ -19,9 +19,9 @@ export const useStore = create<Store>()(
       setParticipants: (names: string[]) => {
         const participantStates: Record<string, ParticipantState> = {};
         names.forEach((name) => {
-          participantStates[name] = 'waiting';
+          participantStates[name] = "waiting";
         });
-        
+
         set({
           participants: names,
           participantStates,
@@ -35,24 +35,24 @@ export const useStore = create<Store>()(
       selectParticipant: (name: string) => {
         const { participantStates } = get();
         const currentState = participantStates[name];
-        
-        if (currentState === 'waiting') {
+
+        if (currentState === "waiting") {
           // D'abord, remettre le participant précédemment sélectionné à 'done'
           const newStates = { ...participantStates };
           Object.keys(newStates).forEach((key) => {
-            if (newStates[key] === 'selected') {
-              newStates[key] = 'done';
+            if (newStates[key] === "selected") {
+              newStates[key] = "done";
             }
           });
-          newStates[name] = 'selected';
-          
+          newStates[name] = "selected";
+
           set({ participantStates: newStates });
-        } else if (currentState === 'selected') {
+        } else if (currentState === "selected") {
           // Passer de selected à done
           set({
             participantStates: {
               ...participantStates,
-              [name]: 'done',
+              [name]: "done",
             },
           });
         }
@@ -65,10 +65,10 @@ export const useStore = create<Store>()(
        */
       selectRandom: () => {
         const { participants, participantStates } = get();
-        
+
         // Récupérer les participants en attente
         const waiting = participants.filter(
-          (name) => participantStates[name] === 'waiting'
+          (name) => participantStates[name] === "waiting"
         );
 
         // Si plus personne en attente, réinitialiser
@@ -82,17 +82,17 @@ export const useStore = create<Store>()(
         // Remettre le participant précédemment sélectionné à 'done'
         const newStates = { ...participantStates };
         Object.keys(newStates).forEach((key) => {
-          if (newStates[key] === 'selected') {
-            newStates[key] = 'done';
+          if (newStates[key] === "selected") {
+            newStates[key] = "done";
           }
         });
 
         // Sélection aléatoire
         const randomIndex = Math.floor(Math.random() * waiting.length);
         const selectedName = waiting[randomIndex];
-        
-        newStates[selectedName] = 'selected';
-        
+
+        newStates[selectedName] = "selected";
+
         set({ participantStates: newStates });
       },
 
@@ -102,16 +102,16 @@ export const useStore = create<Store>()(
       reset: () => {
         const { participants } = get();
         const participantStates: Record<string, ParticipantState> = {};
-        
+
         participants.forEach((name) => {
-          participantStates[name] = 'waiting';
+          participantStates[name] = "waiting";
         });
-        
+
         set({ participantStates });
       },
     }),
     {
-      name: 'anti-nija-storage', // Nom de la clé dans localStorage
+      name: "anti-nija-storage", // Nom de la clé dans localStorage
     }
   )
 );

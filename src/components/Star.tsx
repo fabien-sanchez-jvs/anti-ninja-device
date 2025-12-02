@@ -122,15 +122,6 @@ export default function Star({
         viewBox={`0 0 ${width} ${height}`}
         className="star-svg"
       >
-        {/* L'étoile principale */}
-        <polygon
-          points={generateStarPoints()}
-          className="star-polygon"
-          fill="url(#starGradient)"
-          stroke="#fff"
-          strokeWidth="4"
-        />
-
         {/* Dégradé pour l'étoile */}
         <defs>
           <radialGradient id="starGradient" cx="50%" cy="50%" r="50%">
@@ -144,7 +135,26 @@ export default function Star({
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
+          <filter id="innerGlow">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur" />
+            <feOffset in="blur" dx="0" dy="0" result="offsetBlur" />
+            <feFlood floodColor="#667eea" floodOpacity="0.6" result="color" />
+            <feComposite in="color" in2="offsetBlur" operator="in" result="shadow" />
+            <feComposite in="shadow" in2="SourceAlpha" operator="in" result="innerShadow" />
+            <feMerge>
+              <feMergeNode in="SourceGraphic" />
+              <feMergeNode in="innerShadow" />
+            </feMerge>
+          </filter>
         </defs>
+
+        {/* Fond de l'étoile (sans bordure) */}
+        <polygon
+          points={generateStarPoints()}
+          className="star-polygon"
+          fill="url(#starGradient)"
+          stroke="none"
+        />
 
         {/* Lignes des branches colorées selon l'état */}
         {participants.map((_, index) => {
@@ -167,6 +177,15 @@ export default function Star({
             />
           );
         })}
+
+        {/* Bordure de l'étoile (uniquement le contour) */}
+        <polygon
+          points={generateStarPoints()}
+          className="star-polygon-border"
+          fill="none"
+          stroke="#fff"
+          strokeWidth="4"
+        />
 
         {/* Cercle central cliquable */}
         <circle

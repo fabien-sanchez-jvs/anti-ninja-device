@@ -39,20 +39,11 @@
 }
 
 .btn-icon:hover {
-  transform: scale(1.1) rotate(5deg);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0 0 20px rgba(102, 126, 234, 0.5);
 }
 
 .btn-icon:active {
   transform: scale(0.95);
-}
-
-.btn-settings:hover {
-  background: #f0f0f0;
-}
-
-.btn-reset:hover {
-  background: #fff5f5;
 }
 
 .starview-content {

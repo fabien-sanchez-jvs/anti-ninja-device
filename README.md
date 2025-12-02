@@ -16,4 +16,5 @@ Il y. a 2 bouton suplémentaire :
 - en haut à droite, un bouton en forme de fleche circulaire permet de remetrte à zéro l'affichage.
 
 Visuellement, la personne sélectionné est mise en évidance. les personnes déjà passées sont grisée, les personne qui attendent leur tour reste avec un affichage standart
+Les prénoms sont placé au sommet de l'étoile
 L'étoile est réalisé en SVG

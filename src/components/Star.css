@@ -50,7 +50,7 @@
 }
 
 .participant-click-zone:hover {
-  fill: rgba(102, 126, 234, 0.1);
+  fill: var(--opacity-hover);
 }
 
 .participant-label {
@@ -59,24 +59,24 @@
   cursor: pointer;
   user-select: none;
   transition: all 0.4s ease;
-  fill: #333;
+  fill: var(--color-text-dark);
 }
 
 /* État: en attente */
 .participant-label.waiting {
-  fill: #333;
+  fill: var(--color-text-dark);
   font-weight: 600;
 }
 
 .participant-label.waiting:hover {
-  fill: #667eea;
+  fill: var(--color-primary);
   font-size: 26px;
-  filter: drop-shadow(0 0 8px rgba(102, 126, 234, 0.6));
+  filter: drop-shadow(0 0 8px var(--opacity-glow-strong));
 }
 
 /* État: sélectionné */
 .participant-label.selected {
-  fill: #4caf50;
+  fill: var(--color-success);
   font-size: 32px;
   font-weight: 700;
   filter: drop-shadow(0 0 12px rgba(76, 175, 80, 0.8));
@@ -85,14 +85,14 @@
 
 /* État: déjà passé */
 .participant-label.done {
-  fill: #9e9e9e;
+  fill: var(--color-gray);
   font-weight: 400;
   opacity: 0.5;
   cursor: default;
 }
 
 .participant-label.done:hover {
-  fill: #9e9e9e;
+  fill: var(--color-gray);
   font-size: 24px;
 }
 

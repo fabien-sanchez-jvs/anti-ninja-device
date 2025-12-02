@@ -9,6 +9,41 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Palette de couleurs */
+  --color-primary: #667eea;
+  --color-primary-dark: #5568d3;
+  --color-secondary: #764ba2;
+
+  --color-success: #42e947;
+  --color-success-light: #60f279;
+  --color-success-dark: #40c057;
+
+  --color-error: #ff6b6b;
+  --color-error-dark: #ee5a52;
+  --color-error-bg: #ffe0e0;
+  --color-error-text: #d32f2f;
+
+  --color-gray: #777;
+  --color-gray-light: #fff;
+  --color-gray-medium: #ccc;
+  --color-gray-dark: #555;
+
+  --color-text-dark: #333;
+  --color-text-medium: #666;
+  --color-white: #fff;
+  --color-white-off: #f0f0f0;
+  --color-white-tint: #fff5f5;
+  --color-border: #e0e0e0;
+
+  /* Opacités */
+  --opacity-overlay: rgba(255, 255, 255, 0.1);
+  --opacity-overlay-light: rgba(255, 255, 255, 0.5);
+  --opacity-hover: rgba(102, 126, 234, 0.1);
+  --opacity-glow: rgba(102, 126, 234, 0.5);
+  --opacity-glow-strong: rgba(102, 126, 234, 0.8);
+  --opacity-shadow: rgba(0, 0, 0, 0.15);
+  --opacity-shadow-strong: rgba(0, 0, 0, 0.3);
 }
 
 * {

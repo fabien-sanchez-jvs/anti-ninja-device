@@ -4,26 +4,30 @@
   justify-content: center;
   align-items: center;
   padding: 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary) 0%,
+    var(--color-secondary) 100%
+  );
 }
 
 .settings-content {
-  background: white;
+  background: var(--color-white);
   border-radius: 16px;
   padding: 2rem;
   max-width: 600px;
   width: 100%;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 60px var(--opacity-shadow-strong);
 }
 
 .settings-content h1 {
   margin: 0 0 0.5rem 0;
-  color: #333;
+  color: var(--color-text-dark);
   font-size: 2rem;
 }
 
 .settings-description {
-  color: #666;
+  color: var(--color-text-medium);
   margin-bottom: 2rem;
   font-size: 0.95rem;
 }
@@ -44,7 +48,7 @@
 .participant-input {
   flex: 1;
   padding: 0.75rem 1rem;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border);
   border-radius: 8px;
   font-size: 1rem;
   transition: border-color 0.3s ease;
@@ -52,13 +56,13 @@
 
 .participant-input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: var(--color-primary);
 }
 
 .btn-remove {
   padding: 0.5rem 0.75rem;
-  background: #ff6b6b;
-  color: white;
+  background: var(--color-error);
+  color: var(--color-white);
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -68,14 +72,14 @@
 }
 
 .btn-remove:hover {
-  background: #ee5a52;
+  background: var(--color-error-dark);
 }
 
 .btn-add {
   width: 100%;
   padding: 0.75rem;
-  background: #51cf66;
-  color: white;
+  background: var(--color-success-light);
+  color: var(--color-white);
   border: none;
   border-radius: 8px;
   font-size: 1rem;
@@ -85,12 +89,12 @@
 }
 
 .btn-add:hover {
-  background: #40c057;
+  background: var(--color-success-dark);
 }
 
 .error-message {
-  background: #ffe0e0;
-  color: #d32f2f;
+  background: var(--color-error-bg);
+  color: var(--color-error-text);
   padding: 0.75rem;
   border-radius: 8px;
   margin-bottom: 1rem;
@@ -117,21 +121,21 @@
 }
 
 .btn-cancel {
-  background: #f1f3f5;
-  color: #495057;
+  background: var(--color-gray-light);
+  color: var(--color-gray-dark);
 }
 
 .btn-cancel:hover {
-  background: #e9ecef;
+  background: var(--color-gray-medium);
 }
 
 .btn-save {
-  background: #667eea;
-  color: white;
+  background: var(--color-primary);
+  color: var(--color-white);
 }
 
 .btn-save:hover {
-  background: #5568d3;
+  background: var(--color-primary-dark);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }

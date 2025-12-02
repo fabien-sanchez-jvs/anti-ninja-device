@@ -1,4 +1,5 @@
 import type { ParticipantState } from '../types';
+import { colors } from '../utils/colors';
 import './Star.css';
 
 interface StarProps {
@@ -106,11 +107,11 @@ export default function Star({
     
     switch (state) {
       case 'selected':
-        return '#4caf50'; // Vert
+        return colors.success;
       case 'done':
-        return '#9e9e9e'; // Gris
+        return colors.gray;
       default:
-        return '#667eea'; // Violet (attente)
+        return colors.primary;
     }
   };
 
@@ -125,8 +126,8 @@ export default function Star({
         {/* Dégradé pour l'étoile */}
         <defs>
           <radialGradient id="starGradient" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#764ba2" />
-            <stop offset="100%" stopColor="#667eea" />
+            <stop offset="0%" stopColor={colors.secondary} />
+            <stop offset="100%" stopColor={colors.primary} />
           </radialGradient>
           <filter id="glow">
             <feGaussianBlur stdDeviation="4" result="coloredBlur" />
@@ -138,7 +139,7 @@ export default function Star({
           <filter id="innerGlow">
             <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur" />
             <feOffset in="blur" dx="0" dy="0" result="offsetBlur" />
-            <feFlood floodColor="#667eea" floodOpacity="0.6" result="color" />
+            <feFlood floodColor={colors.primary} floodOpacity="0.6" result="color" />
             <feComposite in="color" in2="offsetBlur" operator="in" result="shadow" />
             <feComposite in="shadow" in2="SourceAlpha" operator="in" result="innerShadow" />
             <feMerge>
@@ -183,7 +184,7 @@ export default function Star({
           points={generateStarPoints()}
           className="star-polygon-border"
           fill="none"
-          stroke="#fff"
+          stroke={colors.white}
           strokeWidth="4"
         />
 
@@ -194,8 +195,8 @@ export default function Star({
           r={centerRadius}
           className="star-center"
           onClick={onCenterClick}
-          fill="#fff"
-          stroke="#667eea"
+          fill={colors.white}
+          stroke={colors.primary}
           strokeWidth="4"
         />
 

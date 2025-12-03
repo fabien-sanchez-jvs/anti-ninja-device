@@ -54,7 +54,7 @@ export default function StarView() {
           ⚙️
         </button>
 
-        <h1 className="starview-title">Anti Nija Device</h1>
+        <h1 className="starview-title">Anti Ninja Device</h1>
 
         <button
           onClick={handleResetClick}

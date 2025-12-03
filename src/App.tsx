@@ -4,7 +4,7 @@ import Settings from './pages/Settings';
 import './App.css';
 
 /**
- * Composant principal de l'application Anti Nija Device
+ * Composant principal de l'application Anti Ninja Device
  * Configure le router avec les deux pages principales
  */
 function App() {

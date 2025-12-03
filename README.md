@@ -1,6 +1,6 @@
-# Anti Nija Device 🎯
+# Anti Ninja Device 🎯
 
-Une application React interactive pour gérer les tours de parole en réunion et détecter les "nija" - ces personnes qui ne prennent pas la parole lors d'un tour de table !
+Une application React interactive pour gérer les tours de parole en réunion et détecter les "ninja" - ces personnes qui ne prennent pas la parole lors d'un tour de table !
 
 ## ✨ Fonctionnalités
 

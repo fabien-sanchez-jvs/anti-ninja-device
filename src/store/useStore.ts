@@ -4,7 +4,7 @@ import type { Store, ParticipantState } from "../types";
 
 /**
  * Store Zustand avec persistance localStorage
- * Gère l'état global de l'application "Anti Nija Device"
+ * Gère l'état global de l'application "Anti Ninja Device"
  */
 export const useStore = create<Store>()(
   persist(
@@ -111,7 +111,7 @@ export const useStore = create<Store>()(
       },
     }),
     {
-      name: "anti-nija-storage", // Nom de la clé dans localStorage
+      name: "anti-ninja-storage", // Nom de la clé dans localStorage
     }
   )
 );

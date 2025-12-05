@@ -13,6 +13,7 @@ export const useStore = create<Store>()(
       participantStates: {},
       chronoTime: 0,
       chronoRunning: false,
+      alarmTime: 0,
 
       /**
        * Définir la liste des participants
@@ -149,6 +150,13 @@ export const useStore = create<Store>()(
         if (chronoRunning) {
           set({ chronoTime: chronoTime + 1 });
         }
+      },
+
+      /**
+       * Définir le temps d'alarme
+       */
+      setAlarmTime: (seconds: number) => {
+        set({ alarmTime: seconds });
       },
     }),
     {

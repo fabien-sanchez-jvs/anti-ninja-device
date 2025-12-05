@@ -19,6 +19,9 @@ export interface Store {
   /** État du chronomètre */
   chronoRunning: boolean;
 
+  /** Temps d'alarme en secondes (0 = pas d'alarme) */
+  alarmTime: number;
+
   /** Définir la liste des participants */
   setParticipants: (names: string[]) => void;
 
@@ -42,4 +45,7 @@ export interface Store {
 
   /** Incrémenter le temps du chronomètre */
   incrementChrono: () => void;
+
+  /** Définir le temps d'alarme */
+  setAlarmTime: (seconds: number) => void;
 }

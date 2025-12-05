@@ -7,7 +7,7 @@ import './Chronometer.css';
  * Affiche le temps écoulé en format MM:SS
  */
 export default function Chronometer() {
-  const { chronoTime, chronoRunning, incrementChrono } = useStore();
+  const { chronoTime, chronoRunning, incrementChrono, alarmTime } = useStore();
 
   // Gestion du timer
   useEffect(() => {
@@ -27,8 +27,11 @@ export default function Chronometer() {
   const formattedMinutes = String(minutes).padStart(2, '0');
   const formattedSeconds = String(seconds).padStart(2, '0');
 
+  // Détection du dépassement de l'alarme
+  const isAlarmExceeded = alarmTime > 0 && chronoTime >= alarmTime;
+
   return (
-    <div className="chronometer">
+    <div className={`chronometer ${isAlarmExceeded ? 'alarm-exceeded' : ''}`}>
       <div className="chronometer-display">
         <span className="chronometer-digit">{formattedMinutes}</span>
         <span className="chronometer-separator">:</span>

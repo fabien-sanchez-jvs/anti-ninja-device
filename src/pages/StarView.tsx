@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../store/useStore';
 import Star from '../components/Star';
+import Chronometer from '../components/Chronometer';
 import './StarView.css';
 
 /**
@@ -68,6 +69,7 @@ export default function StarView() {
 
       {/* Étoile interactive */}
       <div className="starview-content">
+        <Chronometer />
         <Star
           participants={participants}
           participantStates={participantStates}

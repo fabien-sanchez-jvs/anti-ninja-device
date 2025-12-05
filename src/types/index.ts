@@ -13,6 +13,12 @@ export interface Store {
   /** État actuel de chaque participant */
   participantStates: Record<string, ParticipantState>;
 
+  /** Temps écoulé du chronomètre en secondes */
+  chronoTime: number;
+
+  /** État du chronomètre */
+  chronoRunning: boolean;
+
   /** Définir la liste des participants */
   setParticipants: (names: string[]) => void;
 
@@ -24,4 +30,16 @@ export interface Store {
 
   /** Réinitialiser tous les états */
   reset: () => void;
+
+  /** Démarrer le chronomètre */
+  startChrono: () => void;
+
+  /** Mettre en pause le chronomètre */
+  pauseChrono: () => void;
+
+  /** Réinitialiser le chronomètre */
+  resetChrono: () => void;
+
+  /** Incrémenter le temps du chronomètre */
+  incrementChrono: () => void;
 }

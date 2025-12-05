@@ -11,6 +11,8 @@ export const useStore = create<Store>()(
     (set, get) => ({
       participants: [],
       participantStates: {},
+      chronoTime: 0,
+      chronoRunning: false,
 
       /**
        * Définir la liste des participants
@@ -47,6 +49,9 @@ export const useStore = create<Store>()(
           newStates[name] = "selected";
 
           set({ participantStates: newStates });
+          // Réinitialiser et démarrer le chronomètre
+          get().resetChrono();
+          get().startChrono();
         } else if (currentState === "selected") {
           // Passer de selected à done
           set({
@@ -94,6 +99,10 @@ export const useStore = create<Store>()(
         newStates[selectedName] = "selected";
 
         set({ participantStates: newStates });
+
+        // Réinitialiser et démarrer le chronomètre
+        get().resetChrono();
+        get().startChrono();
       },
 
       /**
@@ -108,6 +117,38 @@ export const useStore = create<Store>()(
         });
 
         set({ participantStates });
+        get().resetChrono();
+      },
+
+      /**
+       * Démarrer le chronomètre
+       */
+      startChrono: () => {
+        set({ chronoRunning: true });
+      },
+
+      /**
+       * Mettre en pause le chronomètre
+       */
+      pauseChrono: () => {
+        set({ chronoRunning: false });
+      },
+
+      /**
+       * Réinitialiser le chronomètre
+       */
+      resetChrono: () => {
+        set({ chronoTime: 0, chronoRunning: false });
+      },
+
+      /**
+       * Incrémenter le temps du chronomètre
+       */
+      incrementChrono: () => {
+        const { chronoRunning, chronoTime } = get();
+        if (chronoRunning) {
+          set({ chronoTime: chronoTime + 1 });
+        }
       },
     }),
     {

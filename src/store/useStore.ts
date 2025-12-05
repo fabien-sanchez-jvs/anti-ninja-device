@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { Store, ParticipantState } from "../types";
+import { useChronoStore } from "./useChronoStore";
 
 /**
  * Store Zustand avec persistance localStorage
@@ -47,6 +48,9 @@ export const useStore = create<Store>()(
           newStates[name] = "selected";
 
           set({ participantStates: newStates });
+          // Réinitialiser et démarrer le chronomètre
+          useChronoStore.getState().resetChrono();
+          useChronoStore.getState().startChrono();
         } else if (currentState === "selected") {
           // Passer de selected à done
           set({
@@ -94,6 +98,10 @@ export const useStore = create<Store>()(
         newStates[selectedName] = "selected";
 
         set({ participantStates: newStates });
+
+        // Réinitialiser et démarrer le chronomètre
+        useChronoStore.getState().resetChrono();
+        useChronoStore.getState().startChrono();
       },
 
       /**
@@ -108,6 +116,7 @@ export const useStore = create<Store>()(
         });
 
         set({ participantStates });
+        useChronoStore.getState().resetChrono();
       },
     }),
     {

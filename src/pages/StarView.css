@@ -59,6 +59,7 @@
   overflow: hidden;
   min-height: 0;
   background: var(--opacity-overlay-light);
+  position: relative;
 }
 
 .starview-footer {

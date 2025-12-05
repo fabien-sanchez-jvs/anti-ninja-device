@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../store/useStore';
+import { useChronoStore } from '../store/useChronoStore';
 import './Settings.css';
 
 /**
@@ -9,10 +10,17 @@ import './Settings.css';
 export default function Settings() {
   const navigate = useNavigate();
   const { participants, setParticipants } = useStore();
+  const { alarmTime, setAlarmTime } = useChronoStore();
   const [localParticipants, setLocalParticipants] = useState<string[]>(
     participants.length > 0 ? participants : ['']
   );
   const [error, setError] = useState<string>('');
+  const [alarmInput, setAlarmInput] = useState<string>(() => {
+    if (alarmTime === 0) return '';
+    const minutes = Math.floor(alarmTime / 60);
+    const seconds = alarmTime % 60;
+    return minutes > 0 ? `${minutes}:${seconds.toString().padStart(2, '0')}` : alarmTime.toString();
+  });
 
   const handleAddParticipant = () => {
     setLocalParticipants([...localParticipants, '']);
@@ -48,8 +56,40 @@ export default function Settings() {
       return;
     }
 
+    // Parser l'alarme
+    let alarmSeconds = 0;
+    if (alarmInput.trim()) {
+      if (alarmInput.includes(':')) {
+        // Format min:sec
+        const parts = alarmInput.split(':');
+        if (parts.length === 2) {
+          const minutes = parseInt(parts[0], 10);
+          const seconds = parseInt(parts[1], 10);
+          if (!isNaN(minutes) && !isNaN(seconds) && seconds >= 0 && seconds < 60) {
+            alarmSeconds = minutes * 60 + seconds;
+          } else {
+            setError('Format d\'alarme invalide (MM:SS)');
+            return;
+          }
+        } else {
+          setError('Format d\'alarme invalide (MM:SS ou secondes)');
+          return;
+        }
+      } else {
+        // Format secondes uniquement
+        const seconds = parseInt(alarmInput, 10);
+        if (!isNaN(seconds) && seconds >= 0) {
+          alarmSeconds = seconds;
+        } else {
+          setError('Format d\'alarme invalide (nombre de secondes)');
+          return;
+        }
+      }
+    }
+
     setError('');
     setParticipants(filteredNames);
+    setAlarmTime(alarmSeconds);
     navigate('/');
   };
 
@@ -91,6 +131,23 @@ export default function Settings() {
         <button onClick={handleAddParticipant} className="btn-add">
           + Ajouter un prénom
         </button>
+
+        <div className="alarm-section">
+          <h2>⏰ Alarme</h2>
+          <p className="alarm-description">
+            Définir une alarme (optionnel). Format : MM:SS ou secondes uniquement
+          </p>
+          <input
+            type="text"
+            value={alarmInput}
+            onChange={(e) => setAlarmInput(e.target.value)}
+            placeholder="Ex: 2:30 ou 150"
+            className="alarm-input"
+          />
+          <p className="alarm-hint">
+            Exemples : "2:30" pour 2 min 30 sec, ou "90" pour 90 secondes
+          </p>
+        </div>
 
         {error && <div className="error-message">{error}</div>}
 

@@ -92,6 +92,48 @@
   background: var(--color-success-dark);
 }
 
+.alarm-section {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--color-border);
+}
+
+.alarm-section h2 {
+  margin: 0 0 0.5rem 0;
+  color: var(--color-text-dark);
+  font-size: 1.5rem;
+}
+
+.alarm-description {
+  color: var(--color-text-medium);
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.alarm-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  font-family: "Courier New", Courier, monospace;
+  text-align: center;
+  font-weight: bold;
+}
+
+.alarm-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.alarm-hint {
+  color: var(--color-text-light);
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
 .error-message {
   background: var(--color-error-bg);
   color: var(--color-error-text);

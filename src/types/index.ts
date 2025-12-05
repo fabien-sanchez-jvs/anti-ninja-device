@@ -4,15 +4,9 @@
 export type ParticipantState = "waiting" | "selected" | "done";
 
 /**
- * Structure du store de l'application
+ * Structure du store du chronomètre
  */
-export interface Store {
-  /** Liste des prénoms des participants */
-  participants: string[];
-
-  /** État actuel de chaque participant */
-  participantStates: Record<string, ParticipantState>;
-
+export interface ChronoStore {
   /** Temps écoulé du chronomètre en secondes */
   chronoTime: number;
 
@@ -21,18 +15,6 @@ export interface Store {
 
   /** Temps d'alarme en secondes (0 = pas d'alarme) */
   alarmTime: number;
-
-  /** Définir la liste des participants */
-  setParticipants: (names: string[]) => void;
-
-  /** Sélectionner manuellement un participant */
-  selectParticipant: (name: string) => void;
-
-  /** Sélectionner aléatoirement un participant parmi ceux en attente */
-  selectRandom: () => void;
-
-  /** Réinitialiser tous les états */
-  reset: () => void;
 
   /** Démarrer le chronomètre */
   startChrono: () => void;
@@ -48,4 +30,27 @@ export interface Store {
 
   /** Définir le temps d'alarme */
   setAlarmTime: (seconds: number) => void;
+}
+
+/**
+ * Structure du store de l'application
+ */
+export interface Store {
+  /** Liste des prénoms des participants */
+  participants: string[];
+
+  /** État actuel de chaque participant */
+  participantStates: Record<string, ParticipantState>;
+
+  /** Définir la liste des participants */
+  setParticipants: (names: string[]) => void;
+
+  /** Sélectionner manuellement un participant */
+  selectParticipant: (name: string) => void;
+
+  /** Sélectionner aléatoirement un participant parmi ceux en attente */
+  selectRandom: () => void;
+
+  /** Réinitialiser tous les états */
+  reset: () => void;
 }

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useStore } from '../store/useStore';
+import { useChronoStore } from '../store/useChronoStore';
 import './Chronometer.css';
 
 /**
@@ -7,7 +7,7 @@ import './Chronometer.css';
  * Affiche le temps écoulé en format MM:SS
  */
 export default function Chronometer() {
-  const { chronoTime, chronoRunning, incrementChrono, alarmTime } = useStore();
+  const { chronoTime, chronoRunning, incrementChrono, alarmTime } = useChronoStore();
 
   // Gestion du timer
   useEffect(() => {

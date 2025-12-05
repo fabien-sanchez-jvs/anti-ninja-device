@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../store/useStore';
+import { useChronoStore } from '../store/useChronoStore';
 import './Settings.css';
 
 /**
@@ -8,7 +9,8 @@ import './Settings.css';
  */
 export default function Settings() {
   const navigate = useNavigate();
-  const { participants, setParticipants, alarmTime, setAlarmTime } = useStore();
+  const { participants, setParticipants } = useStore();
+  const { alarmTime, setAlarmTime } = useChronoStore();
   const [localParticipants, setLocalParticipants] = useState<string[]>(
     participants.length > 0 ? participants : ['']
   );

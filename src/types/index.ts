@@ -4,6 +4,15 @@
 export type ParticipantState = "waiting" | "selected" | "done";
 
 /**
+ * Résultat d'un participant avec son temps de participation
+ */
+export interface ParticipantResult {
+  name: string;
+  time: number; // Temps en secondes
+  timestamp: number; // Date de fin
+}
+
+/**
  * Structure du store du chronomètre
  */
 export interface ChronoStore {
@@ -56,4 +65,21 @@ export interface Store {
 
   /** Réinitialiser tous les états */
   reset: () => void;
+}
+
+/**
+ * Structure du store des résultats
+ */
+export interface ResultsStore {
+  /** Résultats de la session en cours */
+  results: ParticipantResult[];
+
+  /** Ajouter un résultat */
+  addResult: (name: string, time: number) => void;
+
+  /** Obtenir les résultats triés par temps (du plus rapide au plus lent) */
+  getSortedResults: () => ParticipantResult[];
+
+  /** Réinitialiser les résultats */
+  clearResults: () => void;
 }

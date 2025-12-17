@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { Store, ParticipantState } from "../types";
 import { useChronoStore } from "./useChronoStore";
+import { useResultsStore } from "./useResultsStore";
 
 /**
  * Store Zustand avec persistance localStorage
@@ -44,6 +45,9 @@ export const useStore = create<Store>()(
           Object.keys(newStates).forEach((key) => {
             if (newStates[key] === "selected") {
               newStates[key] = "done";
+              // Enregistrer le temps du participant précédent
+              const chronoTime = useChronoStore.getState().chronoTime;
+              useResultsStore.getState().addResult(key, chronoTime);
             }
           });
           newStates[name] = "selected";
@@ -53,7 +57,10 @@ export const useStore = create<Store>()(
           useChronoStore.getState().resetChrono();
           useChronoStore.getState().startChrono();
         } else if (currentState === "selected") {
-          // Passer de selected à done
+          // Passer de selected à done et enregistrer le temps
+          const chronoTime = useChronoStore.getState().chronoTime;
+          useResultsStore.getState().addResult(name, chronoTime);
+
           set({
             participantStates: {
               ...participantStates,
@@ -66,6 +73,12 @@ export const useStore = create<Store>()(
         const allParticipantsDone = Object.values(
           get().participantStates
         ).every((state) => state === "done");
+        
+        // Si tous sont terminés, arrêter le chronomètre
+        if (allParticipantsDone) {
+          useChronoStore.getState().pauseChrono();
+        }
+        
         set({ allParticipantsDone });
       },
 
@@ -81,9 +94,19 @@ export const useStore = create<Store>()(
           (name) => participantStates[name] === "waiting"
         );
 
-        // Si plus personne en attente, marquer comme terminé et ne rien faire
+        // Si plus personne en attente, enregistrer le temps du dernier participant et marquer comme terminé
         if (waiting.length === 0) {
-          set({ allParticipantsDone: true });
+          const newStates = { ...participantStates };
+          // Enregistrer le temps du participant actuellement sélectionné (le dernier)
+          Object.keys(newStates).forEach((key) => {
+            if (newStates[key] === "selected") {
+              newStates[key] = "done";
+              const chronoTime = useChronoStore.getState().chronoTime;
+              useResultsStore.getState().addResult(key, chronoTime);
+            }
+          });
+          set({ participantStates: newStates, allParticipantsDone: true });
+          useChronoStore.getState().pauseChrono();
           return;
         }
 
@@ -92,6 +115,9 @@ export const useStore = create<Store>()(
         Object.keys(newStates).forEach((key) => {
           if (newStates[key] === "selected") {
             newStates[key] = "done";
+            // Enregistrer le temps du participant précédent
+            const chronoTime = useChronoStore.getState().chronoTime;
+            useResultsStore.getState().addResult(key, chronoTime);
           }
         });
 
@@ -121,6 +147,7 @@ export const useStore = create<Store>()(
 
         set({ participantStates, allParticipantsDone: false });
         useChronoStore.getState().resetChrono();
+        useResultsStore.getState().clearResults();
       },
     }),
     {

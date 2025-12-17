@@ -3,8 +3,8 @@ import { useStore } from '../store/useStore';
 import { useKeyboard } from '../hooks/useKeyboard';
 import Star from '../components/Star';
 import Chronometer from '../components/Chronometer';
+import LeaderBoard from '../components/LeaderBoard';
 import './StarView.css';
-import ninjaOff from '../assets/ninja-off.svg';
 
 /**
  * Page principale - Vue de l'étoile interactive
@@ -81,13 +81,7 @@ export default function StarView() {
       {/* Étoile interactive */}
       <div className="starview-content">
         {allParticipantsDone ? (
-          <div className="end-image-container">
-            <img
-              src={ninjaOff}
-              alt="Terminé"
-              className="end-image"
-            />
-          </div>
+          <LeaderBoard />
         ) : (
           <>
           <Chronometer />

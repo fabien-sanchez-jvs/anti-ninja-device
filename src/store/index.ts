@@ -4,3 +4,4 @@
 
 export { useStore } from "./useStore";
 export { useChronoStore } from "./useChronoStore";
+export { useResultsStore } from "./useResultsStore";

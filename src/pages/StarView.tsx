@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../store/useStore';
+import { useKeyboard } from '../hooks/useKeyboard';
 import Star from '../components/Star';
 import Chronometer from '../components/Chronometer';
 import './StarView.css';
@@ -26,6 +27,9 @@ export default function StarView() {
   const handleParticipantClick = (name: string) => {
     selectParticipant(name);
   };
+
+  // Écouter la touche espace pour sélection aléatoire
+  useKeyboard(['Space'], handleRandomSelect);
 
   // Rediriger vers les paramètres si aucun participant
   if (participants.length === 0) {
@@ -83,7 +87,7 @@ export default function StarView() {
         <div className="instructions">
           <div className="instruction-item">
             <span className="instruction-icon">🥷</span>
-            <span>Cliquez au centre pour une sélection aléatoire</span>
+            <span>Cliquez au centre ou appuyez sur Espace pour une sélection aléatoire</span>
           </div>
           <div className="instruction-item">
             <span className="instruction-icon">👆</span>

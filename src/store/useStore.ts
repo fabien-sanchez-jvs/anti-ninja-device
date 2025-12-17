@@ -73,12 +73,12 @@ export const useStore = create<Store>()(
         const allParticipantsDone = Object.values(
           get().participantStates
         ).every((state) => state === "done");
-        
+
         // Si tous sont terminés, arrêter le chronomètre
         if (allParticipantsDone) {
           useChronoStore.getState().pauseChrono();
         }
-        
+
         set({ allParticipantsDone });
       },
 

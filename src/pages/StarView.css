@@ -143,14 +143,6 @@
   animation: fadeIn 0.5s ease-in;
 }
 
-.end-image {
-  max-width: 400px;
-  width: 100%;
-  height: auto;
-  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
-  animation: scaleIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -160,16 +152,6 @@
   }
 }
 
-@keyframes scaleIn {
-  from {
-    transform: scale(0.5);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
 
 /* Responsive */
 @media (max-width: 768px) {

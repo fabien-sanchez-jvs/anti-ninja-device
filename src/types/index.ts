@@ -42,6 +42,9 @@ export interface Store {
   /** État actuel de chaque participant */
   participantStates: Record<string, ParticipantState>;
 
+  /** Indique si tous les participants sont terminés */
+  allParticipantsDone: boolean;
+
   /** Définir la liste des participants */
   setParticipants: (names: string[]) => void;
 

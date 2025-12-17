@@ -4,13 +4,14 @@ import { useKeyboard } from '../hooks/useKeyboard';
 import Star from '../components/Star';
 import Chronometer from '../components/Chronometer';
 import './StarView.css';
+import ninjaOff from '../assets/ninja-off.svg';
 
 /**
  * Page principale - Vue de l'étoile interactive
  */
 export default function StarView() {
   const navigate = useNavigate();
-  const { participants, participantStates, selectParticipant, selectRandom, reset } = useStore();
+  const { participants, participantStates, allParticipantsDone, selectParticipant, selectRandom, reset } = useStore();
 
   const handleSettingsClick = () => {
     navigate('/settings');
@@ -21,14 +22,20 @@ export default function StarView() {
   };
 
   const handleRandomSelect = () => {
-    selectRandom();
+    if (allParticipantsDone) {
+      // Si tous sont terminés, réinitialiser pour recommencer
+      reset();
+    } else {
+      // Sinon, sélection aléatoire normale
+      selectRandom();
+    }
   };
 
   const handleParticipantClick = (name: string) => {
     selectParticipant(name);
   };
 
-  // Écouter la touche espace pour sélection aléatoire
+  // Écouter la touche espace pour sélection aléatoire ou reset
   useKeyboard(['Space'], handleRandomSelect);
 
   // Rediriger vers les paramètres si aucun participant
@@ -73,26 +80,42 @@ export default function StarView() {
 
       {/* Étoile interactive */}
       <div className="starview-content">
-        <Chronometer />
-        <Star
-          participants={participants}
-          participantStates={participantStates}
-          onParticipantClick={handleParticipantClick}
-          onCenterClick={handleRandomSelect}
-        />
+        {allParticipantsDone ? (
+          <div className="end-image-container">
+            <img
+              src={ninjaOff}
+              alt="Terminé"
+              className="end-image"
+            />
+          </div>
+        ) : (
+          <>
+          <Chronometer />
+          <Star
+            participants={participants}
+            participantStates={participantStates}
+            onParticipantClick={handleParticipantClick}
+            onCenterClick={handleRandomSelect}
+            />
+            </>
+        )}
       </div>
 
       {/* Instructions */}
       <div className="starview-footer">
         <div className="instructions">
-          <div className="instruction-item">
-            <span className="instruction-icon">🥷</span>
-            <span>Cliquez au centre ou appuyez sur Espace pour une sélection aléatoire</span>
-          </div>
-          <div className="instruction-item">
-            <span className="instruction-icon">👆</span>
-            <span>Cliquez sur un prénom pour le sélectionner manuellement</span>
-          </div>
+          {!allParticipantsDone && (
+            <>
+              <div className="instruction-item">
+                <span className="instruction-icon">🥷</span>
+                <span>Cliquez au centre ou appuyez sur Espace pour une sélection aléatoire</span>
+              </div>
+              <div className="instruction-item">
+                <span className="instruction-icon">👆</span>
+                <span>Cliquez sur un prénom pour le sélectionner manuellement</span>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

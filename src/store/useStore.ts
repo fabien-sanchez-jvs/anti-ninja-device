@@ -12,6 +12,7 @@ export const useStore = create<Store>()(
     (set, get) => ({
       participants: [],
       participantStates: {},
+      allParticipantsDone: false,
 
       /**
        * Définir la liste des participants
@@ -60,12 +61,17 @@ export const useStore = create<Store>()(
             },
           });
         }
-        // Si déjà 'done', ne rien faire
+
+        // Vérifier si tous les participants sont terminés
+        const allParticipantsDone = Object.values(
+          get().participantStates
+        ).every((state) => state === "done");
+        set({ allParticipantsDone });
       },
 
       /**
        * Sélectionner aléatoirement un participant en attente
-       * Si tous sont 'done', réinitialise automatiquement
+       * Si tous sont 'done', ne fait rien (l'écran de fin sera géré par le composant)
        */
       selectRandom: () => {
         const { participants, participantStates } = get();
@@ -75,11 +81,9 @@ export const useStore = create<Store>()(
           (name) => participantStates[name] === "waiting"
         );
 
-        // Si plus personne en attente, réinitialiser
+        // Si plus personne en attente, marquer comme terminé et ne rien faire
         if (waiting.length === 0) {
-          get().reset();
-          // Relancer la sélection après reset
-          setTimeout(() => get().selectRandom(), 100);
+          set({ allParticipantsDone: true });
           return;
         }
 
@@ -115,7 +119,7 @@ export const useStore = create<Store>()(
           participantStates[name] = "waiting";
         });
 
-        set({ participantStates });
+        set({ participantStates, allParticipantsDone: false });
         useChronoStore.getState().resetChrono();
       },
     }),

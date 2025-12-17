@@ -104,12 +104,7 @@ export default function StarView() {
       {/* Instructions */}
       <div className="starview-footer">
         <div className="instructions">
-          {allParticipantsDone ? (
-            <div className="instruction-item">
-              <span className="instruction-icon">🔄</span>
-              <span>Appuyez sur Espace ou cliquez au centre pour recommencer</span>
-            </div>
-          ) : (
+          {!allParticipantsDone && (
             <>
               <div className="instruction-item">
                 <span className="instruction-icon">🥷</span>

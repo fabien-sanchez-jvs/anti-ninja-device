@@ -73,8 +73,11 @@
   justify-content: center;
   gap: 3rem;
   flex-wrap: wrap;
-  max-width: 900px;
+  width: 80%;
   margin: 0 auto;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 }
 
 .instruction-item {

@@ -54,6 +54,8 @@ export interface Store {
   /** Indique si tous les participants sont terminés */
   allParticipantsDone: boolean;
 
+  ninja: string | null;
+
   /** Définir la liste des participants */
   setParticipants: (names: string[]) => void;
 

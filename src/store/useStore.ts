@@ -3,6 +3,7 @@ import { persist } from "zustand/middleware";
 import type { Store, ParticipantState } from "../types";
 import { useChronoStore } from "./useChronoStore";
 import { useResultsStore } from "./useResultsStore";
+import { selectNinja } from "../utils/selectNinja";
 
 /**
  * Store Zustand avec persistance localStorage
@@ -14,6 +15,7 @@ export const useStore = create<Store>()(
       participants: [],
       participantStates: {},
       allParticipantsDone: false,
+      ninja: null,
 
       /**
        * Définir la liste des participants
@@ -87,11 +89,11 @@ export const useStore = create<Store>()(
        * Si tous sont 'done', ne fait rien (l'écran de fin sera géré par le composant)
        */
       selectRandom: () => {
-        const { participants, participantStates } = get();
+        const { participants, participantStates, ninja } = get();
 
         // Récupérer les participants en attente
         const waiting = participants.filter(
-          (name) => participantStates[name] === "waiting"
+          (name) => participantStates[name] === "waiting" && name !== ninja
         );
 
         // Si plus personne en attente, enregistrer le temps du dernier participant et marquer comme terminé
@@ -127,6 +129,11 @@ export const useStore = create<Store>()(
 
         newStates[selectedName] = "selected";
 
+        const isTimeToNinja = waiting.length <= participants.length / 2 && ninja;
+        if (isTimeToNinja && ninja in newStates) {
+          newStates[ninja] = "done";
+        }
+
         set({ participantStates: newStates });
 
         // Réinitialiser et démarrer le chronomètre
@@ -139,13 +146,16 @@ export const useStore = create<Store>()(
        */
       reset: () => {
         const { participants } = get();
+
+        const ninja = selectNinja(participants, { chanceToHaveNinja: 20 });
+
         const participantStates: Record<string, ParticipantState> = {};
 
         participants.forEach((name) => {
           participantStates[name] = "waiting";
         });
 
-        set({ participantStates, allParticipantsDone: false });
+        set({ participantStates, allParticipantsDone: false, ninja });
         useChronoStore.getState().resetChrono();
         useResultsStore.getState().clearResults();
       },

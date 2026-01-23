@@ -147,7 +147,7 @@ export const useStore = create<Store>()(
       reset: () => {
         const { participants } = get();
 
-        const ninja = selectNinja(participants, { chanceToHaveNinja: 20 });
+        const ninja = selectNinja(participants, { chanceToHaveNinja: 34 });
 
         const participantStates: Record<string, ParticipantState> = {};
 

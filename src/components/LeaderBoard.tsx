@@ -1,6 +1,7 @@
 import { useResultsStore } from '../store/useResultsStore';
 import { useStore } from '../store/useStore';
 import ninjaOff from '../assets/ninja-off.svg';
+import ninja from "../assets/ninja.svg";
 import './LeaderBoard.css';
 
 /**
@@ -47,10 +48,12 @@ export default function LeaderBoard() {
       .map(name => ({ name, time: 0, hasResult: false }))
   ];
 
+  const hasNinja = allParticipants.some(participant => !participant.hasResult);
+
   return (
       <div className="leaderboard-container">
         <div className="leaderboard-image">
-          <img src={ninjaOff} alt="Terminé" />
+          <img src={hasNinja ? ninja : ninjaOff} alt="Terminé" />
         </div>
       <div className="leaderboard">
       <h2 className="leaderboard-title">🏆 Classement 🏆</h2>

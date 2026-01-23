@@ -4,26 +4,10 @@ import { useStore } from "../store/useStore";
 import type { PenaltyType } from "../types";
 import ninjaOff from "../assets/ninja-off.svg";
 import ninja from "../assets/ninja.svg";
+import PenaltyButton from "./PenaltyButton";
+import PenaltyIndicator from "./PenaltyIndicator";
+import TimeDisplay from "./TimeDisplay";
 import "./LeaderBoard.css";
-
-/**
- * Formater un temps en secondes vers un format MM:SS
- */
-const formatTime = (seconds: number): string => {
-  const mins = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
-};
-
-/**
- * Calculer le temps effectif d'un participant (temps + pénalités)
- */
-const getEffectiveTime = (time: number, penalty?: PenaltyType): number => {
-  if (penalty === "penalty1") {
-    return time + 30; // Ajoute 30 secondes
-  }
-  return time;
-};
 
 /**
  * Obtenir l'emoji de médaille selon le rang
@@ -49,7 +33,6 @@ export default function LeaderBoard() {
   const { participants } = useStore();
   const results = getSortedResults();
   const [hoveredRow, setHoveredRow] = useState<string | null>(null);
-  const [showPenaltyMenu, setShowPenaltyMenu] = useState<string | null>(null);
 
   // Créer un Map pour accéder rapidement aux résultats par nom
   const resultsMap = new Map(results.map((r) => [r.name, r]));
@@ -76,9 +59,8 @@ export default function LeaderBoard() {
     (participant) => !participant.hasResult,
   );
 
-  const handlePenaltyClick = (name: string, penalty: PenaltyType) => {
+  const handlePenaltyChange = (name: string, penalty: PenaltyType) => {
     setPenalty(name, penalty);
-    setShowPenaltyMenu(null);
   };
 
   return (
@@ -121,103 +103,22 @@ export default function LeaderBoard() {
                 >
                   {participant.name}
                 </span>
-                {participant.penalty === "penalty1" && (
-                  <div
-                    className="leaderboard-penalty-indicator leaderboard-penalty-yellow"
-                    title="Pénalité +30s"
-                  ></div>
-                )}
-                {participant.penalty === "penalty2" && (
-                  <div
-                    className="leaderboard-penalty-indicator leaderboard-penalty-red"
-                    title="Disqualifié"
-                  ></div>
-                )}
-                {participant.hasResult && hoveredRow === participant.name && (
-                  <div className="leaderboard-penalty-buttons">
-                    <button
-                      className="leaderboard-penalty-btn"
-                      onClick={() =>
-                        setShowPenaltyMenu(
-                          showPenaltyMenu === participant.name
-                            ? null
-                            : participant.name,
-                        )
-                      }
-                      title="Appliquer une pénalité"
-                    >
-                      ⚠️
-                    </button>
-                    {showPenaltyMenu === participant.name && (
-                      <div className="leaderboard-penalty-menu">
-                        <button
-                          className="leaderboard-penalty-menu-item penalty-1"
-                          onClick={() =>
-                            handlePenaltyClick(
-                              participant.name,
-                              participant.penalty === "penalty1"
-                                ? null
-                                : "penalty1",
-                            )
-                          }
-                        >
-                          {participant.penalty === "penalty1" ? "✓ " : ""}+30s
-                        </button>
-                        <button
-                          className="leaderboard-penalty-menu-item penalty-2"
-                          onClick={() =>
-                            handlePenaltyClick(
-                              participant.name,
-                              participant.penalty === "penalty2"
-                                ? null
-                                : "penalty2",
-                            )
-                          }
-                        >
-                          {participant.penalty === "penalty2" ? "✓ " : ""}
-                          Disqualifié
-                        </button>
-                        {participant.penalty && (
-                          <button
-                            className="leaderboard-penalty-menu-item penalty-remove"
-                            onClick={() =>
-                              handlePenaltyClick(participant.name, null)
-                            }
-                          >
-                            Retirer
-                          </button>
-                        )}
-                      </div>
-                    )}
-                  </div>
+                <PenaltyIndicator penalty={participant.penalty} />
+                {participant.hasResult && (
+                  <PenaltyButton
+                    participantName={participant.name}
+                    currentPenalty={participant.penalty}
+                    onPenaltyChange={handlePenaltyChange}
+                    isVisible={hoveredRow === participant.name}
+                  />
                 )}
               </div>
               <div className="leaderboard-col-time">
-                {participant.hasResult ? (
-                  <>
-                    {participant.penalty === "penalty1" ? (
-                      <>
-                        <span className="leaderboard-time-original">
-                          {formatTime(participant.time)}
-                        </span>
-                        <span className="leaderboard-time-effective">
-                          {" "}
-                          →{" "}
-                          {formatTime(
-                            getEffectiveTime(
-                              participant.time,
-                              participant.penalty,
-                            ),
-                          )}
-                        </span>
-                      </>
-                    ) : (
-                      formatTime(participant.time)
-                    )}
-                  </>
-                ) : (
-                  "-"
-                )}
+                <TimeDisplay
+                  time={participant.time}
+                  penalty={participant.penalty}
+                  hasResult={participant.hasResult}
+                />
               </div>
             </div>
           ))}

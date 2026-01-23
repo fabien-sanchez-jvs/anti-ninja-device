@@ -1,0 +1,85 @@
+.penalty-buttons {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  position: relative;
+  opacity: 0;
+  transition: 0.33s ease opacity;
+  &.visible {
+    opacity: 1;
+    transition: 0.66s ease opacity;
+  }
+}
+
+.penalty-btn {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  overflow: hidden;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.penalty-btn:hover {
+  background: #f5f5f5;
+  border-color: #999;
+  transform: scale(1.05);
+}
+
+.penalty-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 0.25rem;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  min-width: 140px;
+  overflow: hidden;
+}
+
+.penalty-menu-item {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  background: white;
+  border: none;
+  border-bottom: 1px solid #f0f0f0;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s ease;
+}
+
+.penalty-menu-item:last-child {
+  border-bottom: none;
+}
+
+.penalty-menu-item:hover {
+  background: #f5f5f5;
+}
+
+.penalty-menu-item.penalty-1:hover {
+  background: #fff9e6;
+  color: #f57c00;
+}
+
+.penalty-menu-item.penalty-2:hover {
+  background: #ffebee;
+  color: #d32f2f;
+}
+
+.penalty-menu-item.penalty-remove:hover {
+  background: #e3f2fd;
+  color: #1976d2;
+}

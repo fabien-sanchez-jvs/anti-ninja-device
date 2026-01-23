@@ -1,0 +1,10 @@
+.time-original {
+  text-decoration: line-through;
+  opacity: 0.5;
+  font-size: 0.9rem;
+}
+
+.time-effective {
+  color: #f57c00;
+  font-weight: 700;
+}

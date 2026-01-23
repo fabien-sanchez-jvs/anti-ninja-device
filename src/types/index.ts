@@ -4,12 +4,18 @@
 export type ParticipantState = "waiting" | "selected" | "done";
 
 /**
+ * Type de pénalité appliquée à un participant
+ */
+export type PenaltyType = "penalty1" | "penalty2" | null;
+
+/**
  * Résultat d'un participant avec son temps de participation
  */
 export interface ParticipantResult {
   name: string;
   time: number; // Temps en secondes
   timestamp: number; // Date de fin
+  penalty?: PenaltyType; // Type de pénalité appliquée
 }
 
 /**
@@ -78,6 +84,9 @@ export interface ResultsStore {
 
   /** Ajouter un résultat */
   addResult: (name: string, time: number) => void;
+
+  /** Appliquer une pénalité à un participant */
+  setPenalty: (name: string, penalty: PenaltyType) => void;
 
   /** Obtenir les résultats triés par temps (du plus rapide au plus lent) */
   getSortedResults: () => ParticipantResult[];

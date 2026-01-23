@@ -27,6 +27,7 @@ export const useResultsStore = create<ResultsStore>()(
             name,
             time,
             timestamp: Date.now(),
+            penalty: null,
           };
           set({ results: newResults });
         } else {
@@ -38,6 +39,7 @@ export const useResultsStore = create<ResultsStore>()(
                 name,
                 time,
                 timestamp: Date.now(),
+                penalty: null,
               },
             ],
           });
@@ -45,11 +47,44 @@ export const useResultsStore = create<ResultsStore>()(
       },
 
       /**
+       * Appliquer une pénalité à un participant
+       */
+      setPenalty: (name: string, penalty) => {
+        const { results } = get();
+        const existingIndex = results.findIndex((r) => r.name === name);
+
+        if (existingIndex >= 0) {
+          const newResults = [...results];
+          newResults[existingIndex] = {
+            ...newResults[existingIndex],
+            penalty,
+          };
+          set({ results: newResults });
+        }
+      },
+
+      /**
        * Obtenir les résultats triés par temps (du plus rapide au plus lent)
+       * Les participants avec penalty2 sont classés à la fin
+       * Les participants avec penalty1 ont 30 secondes ajoutées à leur temps pour le tri
        */
       getSortedResults: () => {
         const { results } = get();
-        return [...results].sort((a, b) => a.time - b.time);
+        return [...results].sort((a, b) => {
+          // Les disqualifiés (penalty2) vont à la fin
+          if (a.penalty === "penalty2" && b.penalty !== "penalty2") return 1;
+          if (b.penalty === "penalty2" && a.penalty !== "penalty2") return -1;
+
+          // Si les deux sont disqualifiés, trier par temps
+          if (a.penalty === "penalty2" && b.penalty === "penalty2") {
+            return a.time - b.time;
+          }
+
+          // Sinon, comparer les temps en ajoutant 30s pour penalty1
+          const aTime = a.penalty === "penalty1" ? a.time + 30 : a.time;
+          const bTime = b.penalty === "penalty1" ? b.time + 30 : b.time;
+          return aTime - bTime;
+        });
       },
 
       /**
@@ -61,6 +96,6 @@ export const useResultsStore = create<ResultsStore>()(
     }),
     {
       name: "anti-ninja-results-storage", // Nom de la clé dans localStorage
-    }
-  )
+    },
+  ),
 );

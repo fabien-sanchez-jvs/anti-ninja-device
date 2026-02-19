@@ -5,6 +5,7 @@ import Star from '../components/Star';
 import Chronometer from '../components/Chronometer';
 import LeaderBoard from '../components/LeaderBoard';
 import './StarView.css';
+import { NinjaMarker } from '../components/NinjaMarker';
 
 /**
  * Page principale - Vue de l'étoile interactive
@@ -100,6 +101,7 @@ export default function StarView() {
         <div className="instructions">
           {!allParticipantsDone && (
             <>
+              <NinjaMarker />
               <div className="instruction-item">
                 <span className="instruction-icon">🥷</span>
                 <span>Cliquez au centre ou appuyez sur Espace pour une sélection aléatoire</span>
